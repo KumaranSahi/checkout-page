@@ -40,6 +40,14 @@ export type ProductActionType =
   | {
       type: "DECREASE_QUANTITY";
       payload: number;
+    }
+  | {
+      type: "ADD_TO_SAVE_FOR_LATER";
+      payload: number;
+    }
+  | {
+      type: "REMOVE_SAVE_FOR_LATER";
+      payload: number;
     };
 
 export interface ProductContextType extends ProductStateType {

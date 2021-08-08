@@ -20,11 +20,12 @@ export const CartItem = ({
   price,
   title,
   quantity,
+  inSaveForLater,
 }: ProductItemType) => {
   const { dispatch } = useProductContext();
   return (
-    <VStack alignItems="flex-start" width="20rem" height="40rem" padding="2">
-      <Image src={image} width="100%" height="65%" />
+    <VStack alignItems="flex-start" width="20rem" height="30rem" padding="2">
+      <Image src={image} width="100%" height="50%" />
       <HStack justifyContent="space-between" height="2">
         <Text color="teal" fontWeight="bold">
           {brand}
@@ -72,21 +73,47 @@ export const CartItem = ({
           +
         </Button>
       </HStack>
-      <Button width="100%" colorScheme="teal">
-        Save for later
-      </Button>
-      <Button
-        width="100%"
-        variant="ghost"
-        onClick={() =>
-          dispatch({
-            type: "REMOVE_FROM_CART",
-            payload: id,
-          })
-        }
-      >
-        Remove from cart
-      </Button>
+      {inSaveForLater ? (
+        <Button
+          width="100%"
+          colorScheme="teal"
+          onClick={() => {
+            dispatch({
+              type: "REMOVE_SAVE_FOR_LATER",
+              payload: id,
+            });
+          }}
+        >
+          Move to cart
+        </Button>
+      ) : (
+        <Button
+          width="100%"
+          colorScheme="teal"
+          onClick={() => {
+            dispatch({
+              type: "ADD_TO_SAVE_FOR_LATER",
+              payload: id,
+            });
+          }}
+        >
+          Save for later
+        </Button>
+      )}
+      {!inSaveForLater && (
+        <Button
+          width="100%"
+          variant="ghost"
+          onClick={() =>
+            dispatch({
+              type: "ADD_TO_SAVE_FOR_LATER",
+              payload: id,
+            })
+          }
+        >
+          Remove from cart
+        </Button>
+      )}
     </VStack>
   );
 };

@@ -8,15 +8,12 @@ import {
 } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
 
-export const Navbar = ({
-  openDrawer,
-}: {
-  openDrawer: (arg0: boolean) => void;
-}) => {
+export const Navbar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const { push } = useHistory();
+  const { pathname } = useLocation();
   return (
     <HStack
       justifyContent="space-between"
@@ -33,9 +30,19 @@ export const Navbar = ({
         Flipkart
       </Heading>
       <Box>
-        <Button variant="ghost" cursor="pointer" onClick={() => push("/cart")}>
-          Go to cart
-        </Button>
+        {pathname === "/cart" ? (
+          <Button variant="ghost" cursor="pointer" onClick={() => push("/")}>
+            Go to home
+          </Button>
+        ) : (
+          <Button
+            variant="ghost"
+            cursor="pointer"
+            onClick={() => push("/cart")}
+          >
+            Go to cart
+          </Button>
+        )}
         <Button onClick={toggleColorMode} borderRadius="full">
           {colorMode === "light" ? (
             <FontAwesomeIcon icon={faMoon} />

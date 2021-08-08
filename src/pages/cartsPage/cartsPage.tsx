@@ -3,14 +3,14 @@ import {
   ListItem,
   Box,
   Heading,
-  HStack,
+  VStack,
   Text,
 } from "@chakra-ui/react";
 import { useProductContext } from "../../reducer/ProductContext";
 import { CartItem } from "../../components";
 
 export const CartsPage = () => {
-  const { cart } = useProductContext();
+  const { cart, saveForLater } = useProductContext();
 
   const calculateCost = () => {
     return cart.reduce((acc, curr) => {
@@ -38,22 +38,8 @@ export const CartsPage = () => {
   return (
     <Box>
       {cart && cart.length > 0 ? (
-        <HStack>
-          <UnorderedList
-            listStyleType="none"
-            display="flex"
-            flexWrap="wrap"
-            padding="2"
-            flex="4"
-          >
-            {cart &&
-              cart.map((product) => (
-                <ListItem key={product.id} margin="1">
-                  <CartItem {...product} />
-                </ListItem>
-              ))}
-          </UnorderedList>
-          <Box flex="2" boxShadow="dark-lg" textAlign="left" padding="2">
+        <VStack>
+          <Box padding="2" width="100%">
             <Text>Total Cost: Rs.{calculateCost().toLocaleString()}</Text>
             <Text>
               Cost After Discounts: Rs.
@@ -61,9 +47,47 @@ export const CartsPage = () => {
             </Text>
             <Text>You Save: Rs.{calculateAmountSaved().toLocaleString()}</Text>
           </Box>
-        </HStack>
+          <Box>
+            <Heading>Cart</Heading>
+            <UnorderedList
+              listStyleType="none"
+              display="flex"
+              flexWrap="wrap"
+              padding="2"
+              width="100%"
+              boxShadow="dark-lg"
+            >
+              {cart &&
+                cart.map((product) => (
+                  <ListItem key={product.id} margin="1">
+                    <CartItem {...product} />
+                  </ListItem>
+                ))}
+            </UnorderedList>
+          </Box>
+        </VStack>
       ) : (
         <Heading>No items in cart</Heading>
+      )}
+      {saveForLater && saveForLater.length > 0 && (
+        <Box>
+          <Heading>Save For Later</Heading>
+          <UnorderedList
+            listStyleType="none"
+            display="flex"
+            flexWrap="wrap"
+            padding="2"
+            width="100%"
+            boxShadow="dark-lg"
+          >
+            {saveForLater &&
+              saveForLater.map((product) => (
+                <ListItem key={product.id} margin="1">
+                  <CartItem {...product} />
+                </ListItem>
+              ))}
+          </UnorderedList>
+        </Box>
       )}
     </Box>
   );
