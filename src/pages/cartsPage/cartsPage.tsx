@@ -39,16 +39,31 @@ export const CartsPage = () => {
     <Box>
       {cart && cart.length > 0 ? (
         <VStack>
-          <Box padding="2" width="100%">
-            <Text>Total Cost: Rs.{calculateCost().toLocaleString()}</Text>
-            <Text>
-              Cost After Discounts: Rs.
-              {calculateTotalCostAfterDiscount().toLocaleString()}
-            </Text>
-            <Text>You Save: Rs.{calculateAmountSaved().toLocaleString()}</Text>
-          </Box>
           <Box>
             <Heading>Cart</Heading>
+            <Box padding="4" width="100%">
+              <Text>
+                Total Cost:{" "}
+                <Text color="teal" fontSize="xl">
+                  Rs.{calculateCost().toLocaleString()}
+                </Text>
+              </Text>
+              <Text>
+                Cost After Discounts:
+                <Text color="teal" fontSize="xl">
+                  {" "}
+                  Rs.
+                  {calculateTotalCostAfterDiscount().toLocaleString()}
+                </Text>
+              </Text>
+              <Text>
+                You Save:
+                <Text color="teal" fontSize="xl">
+                  Rs.
+                  {calculateAmountSaved().toLocaleString()}
+                </Text>
+              </Text>
+            </Box>
             <UnorderedList
               listStyleType="none"
               display="flex"

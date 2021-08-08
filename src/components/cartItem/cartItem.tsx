@@ -106,7 +106,7 @@ export const CartItem = ({
           variant="ghost"
           onClick={() =>
             dispatch({
-              type: "ADD_TO_SAVE_FOR_LATER",
+              type: "REMOVE_FROM_CART",
               payload: id,
             })
           }
