@@ -8,6 +8,7 @@ import {
   TagLabel,
   HStack,
   Button,
+  Box,
 } from "@chakra-ui/react";
 import logo from "../../data/images/Logo with background.png";
 import { useProductContext } from "../../reducer/ProductContext";
@@ -21,8 +22,16 @@ export const CartItem = ({
   title,
   quantity,
   inSaveForLater,
+  hasDiscount,
+  discount,
 }: ProductItemType) => {
   const { dispatch } = useProductContext();
+
+  const calculateDiscount = (price: number, discount: number) => {
+    const finalPrice = price - price * (discount / 100);
+    return finalPrice;
+  };
+
   return (
     <VStack alignItems="flex-start" width="20rem" height="30rem" padding="2">
       <Image src={image} width="100%" height="50%" />
@@ -39,15 +48,41 @@ export const CartItem = ({
       </HStack>
       <Text>{title.slice(0, 20)}...</Text>
       <HStack justifyContent="space-between" width="100%">
-        <Text
-          color="teal"
-          fontWeight="bold"
-          fontSize="xl"
-          flex="4"
-          textAlign="left"
-        >
-          Rs. {price.toLocaleString()}
-        </Text>
+        {hasDiscount ? (
+          <Box>
+            <Text
+              fontWeight="bold"
+              flex="4"
+              textAlign="left"
+              color="gray"
+              textDecoration="line-through"
+              display="inline"
+            >
+              Rs. {price.toLocaleString()}
+            </Text>
+            <Text
+              color="teal"
+              fontWeight="bold"
+              fontSize="xl"
+              flex="4"
+              textAlign="left"
+              display="inline"
+            >
+              Rs. {calculateDiscount(price, discount!).toLocaleString()} (
+              {discount})% OFF
+            </Text>
+          </Box>
+        ) : (
+          <Text
+            color="teal"
+            fontWeight="bold"
+            fontSize="xl"
+            flex="4"
+            textAlign="left"
+          >
+            Rs. {price.toLocaleString()}
+          </Text>
+        )}
       </HStack>
       <HStack>
         <Button

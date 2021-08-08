@@ -22,7 +22,7 @@ export const CartsPage = () => {
     return cart.reduce((acc, curr) => {
       return curr.hasDiscount
         ? acc +
-            (curr.price - ((curr.price * curr.discount!) / 100) * curr.quantity)
+            (curr.price - (curr.price * curr.discount!) / 100) * curr.quantity
         : acc + curr.price * curr.quantity;
     }, 0);
   };
