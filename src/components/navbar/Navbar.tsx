@@ -4,11 +4,11 @@ import {
   Button,
   useColorMode,
   useColorModeValue,
-  useMediaQuery,
   Box,
 } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSun, faMoon, faBars } from "@fortawesome/free-solid-svg-icons";
+import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
+import { useHistory } from "react-router";
 
 export const Navbar = ({
   openDrawer,
@@ -16,7 +16,7 @@ export const Navbar = ({
   openDrawer: (arg0: boolean) => void;
 }) => {
   const { colorMode, toggleColorMode } = useColorMode();
-  const [isLargerThan700] = useMediaQuery("(min-width: 700px)");
+  const { push } = useHistory();
   return (
     <HStack
       justifyContent="space-between"
@@ -29,14 +29,13 @@ export const Navbar = ({
       top="0%"
       bg={useColorModeValue("white", "gray.800")}
     >
-      {!isLargerThan700 && (
-        <Button borderRadius="full" onClick={() => openDrawer(true)}>
-          <FontAwesomeIcon icon={faBars} />
-        </Button>
-      )}
-      <Heading color="teal">Flipkart</Heading>
+      <Heading color="teal" cursor="pointer" onClick={() => push("/")}>
+        Flipkart
+      </Heading>
       <Box>
-        <Button variant="ghost">Go to cart</Button>
+        <Button variant="ghost" cursor="pointer" onClick={() => push("/cart")}>
+          Go to cart
+        </Button>
         <Button onClick={toggleColorMode} borderRadius="full">
           {colorMode === "light" ? (
             <FontAwesomeIcon icon={faMoon} />

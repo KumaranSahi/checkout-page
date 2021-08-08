@@ -35,11 +35,11 @@ export type ProductActionType =
     }
   | {
       type: "INCREASE_QUANTITY";
-      payload: string;
+      payload: number;
     }
   | {
       type: "DECREASE_QUANTITY";
-      payload: string;
+      payload: number;
     };
 
 export interface ProductContextType extends ProductStateType {

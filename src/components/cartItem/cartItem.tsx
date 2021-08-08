@@ -7,17 +7,21 @@ import {
   Avatar,
   TagLabel,
   HStack,
+  Button,
 } from "@chakra-ui/react";
 import logo from "../../data/images/Logo with background.png";
+import { useProductContext } from "../../reducer/ProductContext";
 
-export const ProductItem = ({
+export const CartItem = ({
+  id,
   brand,
   fastDelivery,
   image,
   price,
   title,
-  inCart,
+  quantity,
 }: ProductItemType) => {
+  const { dispatch } = useProductContext();
   return (
     <VStack alignItems="flex-start" width="20rem" height="34rem" padding="2">
       <Image src={image} width="100%" height="65%" />
@@ -43,17 +47,31 @@ export const ProductItem = ({
         >
           Rs. {price.toLocaleString()}
         </Text>
-        
       </HStack>
-      {/* {inCart ? (
-        <Button width="100%" colorScheme="teal">
-          Go to cart
+      <HStack>
+        <Button
+          onClick={() =>
+            dispatch({
+              type: "DECREASE_QUANTITY",
+              payload: id,
+            })
+          }
+          disabled={quantity === 0}
+        >
+          -
         </Button>
-      ) : (
-        <Button width="100%" colorScheme="teal">
-          Add to cart
+        <Text>{quantity}</Text>
+        <Button
+          onClick={() =>
+            dispatch({
+              type: "INCREASE_QUANTITY",
+              payload: id,
+            })
+          }
+        >
+          +
         </Button>
-      )} */}
+      </HStack>
     </VStack>
   );
 };

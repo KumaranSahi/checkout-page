@@ -10,8 +10,11 @@ import {
   Button,
 } from "@chakra-ui/react";
 import logo from "../../data/images/Logo with background.png";
+import { useHistory } from "react-router";
+import { useProductContext } from "../../reducer/ProductContext";
 
 export const ProductItem = ({
+  id,
   brand,
   fastDelivery,
   image,
@@ -19,6 +22,19 @@ export const ProductItem = ({
   title,
   inCart,
 }: ProductItemType) => {
+  const { push } = useHistory();
+  const { dispatch, products } = useProductContext();
+
+  const goToCart = () => push("/cart");
+
+  const addToCart = (productId: number) => {
+    const product = products.find(({ id }) => id === productId);
+    dispatch({
+      type: "ADD_TO_CART",
+      payload: product!,
+    });
+  };
+
   return (
     <VStack alignItems="flex-start" width="20rem" height="34rem" padding="2">
       <Image src={image} width="100%" height="65%" />
@@ -46,11 +62,11 @@ export const ProductItem = ({
         </Text>
       </HStack>
       {inCart ? (
-        <Button width="100%" colorScheme="teal">
+        <Button width="100%" colorScheme="teal" onClick={goToCart}>
           Go to cart
         </Button>
       ) : (
-        <Button width="100%" colorScheme="teal">
+        <Button width="100%" colorScheme="teal" onClick={() => addToCart(id)}>
           Add to cart
         </Button>
       )}

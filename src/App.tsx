@@ -1,8 +1,9 @@
 import "./App.css";
 import { Navbar, FilterDrawer } from "./components";
-import { ProductsaPage } from "./pages";
+import { ProductsaPage, CartsPage } from "./pages";
 import { Box } from "@chakra-ui/react";
 import { useState } from "react";
+import { Route, Switch } from "react-router-dom";
 
 function App() {
   const [open, setOpen] = useState(false);
@@ -16,7 +17,10 @@ function App() {
       <Navbar openDrawer={openDrawer} />
       <FilterDrawer isOpen={open} onClose={openDrawer} />
       <Box marginTop="4rem">
-        <ProductsaPage />
+        <Switch>
+          <Route path="/cart" component={CartsPage} />
+          <Route path="/" component={ProductsaPage} />
+        </Switch>
       </Box>
     </div>
   );
