@@ -8,7 +8,7 @@ export const productReducer = (
     case "ADD_TO_CART":
       return {
         ...state,
-        cart: [...state.cart, { ...action.payload, inCart: true }],
+        cart: [...state.cart, { ...action.payload, inCart: true, quantity: 1 }],
         products: state.products.map((product) =>
           product.id === action.payload.id
             ? {

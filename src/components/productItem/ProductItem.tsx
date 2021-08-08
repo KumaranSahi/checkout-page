@@ -8,6 +8,7 @@ import {
   TagLabel,
   HStack,
   Button,
+  Box,
 } from "@chakra-ui/react";
 import logo from "../../data/images/Logo with background.png";
 import { useHistory } from "react-router";
@@ -21,6 +22,8 @@ export const ProductItem = ({
   price,
   title,
   inCart,
+  hasDiscount,
+  discount,
 }: ProductItemType) => {
   const { push } = useHistory();
   const { dispatch, products } = useProductContext();
@@ -35,8 +38,13 @@ export const ProductItem = ({
     });
   };
 
+  const calculateDiscount = (price: number, discount: number) => {
+    const finalPrice = price - price * (discount / 100);
+    return finalPrice;
+  };
+
   return (
-    <VStack alignItems="flex-start" width="20rem" height="34rem" padding="2">
+    <VStack alignItems="flex-start" width="20rem" height="35rem" padding="2">
       <Image src={image} width="100%" height="65%" />
       <HStack justifyContent="space-between" height="2">
         <Text color="teal" fontWeight="bold">
@@ -51,15 +59,41 @@ export const ProductItem = ({
       </HStack>
       <Text>{title.slice(0, 20)}...</Text>
       <HStack justifyContent="space-between" width="100%">
-        <Text
-          color="teal"
-          fontWeight="bold"
-          fontSize="xl"
-          flex="4"
-          textAlign="left"
-        >
-          Rs. {price.toLocaleString()}
-        </Text>
+        {hasDiscount ? (
+          <Box>
+            <Text
+              fontWeight="bold"
+              flex="4"
+              textAlign="left"
+              color="gray"
+              textDecoration="line-through"
+              display="inline"
+            >
+              Rs. {price.toLocaleString()}
+            </Text>
+            <Text
+              color="teal"
+              fontWeight="bold"
+              fontSize="xl"
+              flex="4"
+              textAlign="left"
+              display="inline"
+            >
+              Rs. {calculateDiscount(price, discount!).toLocaleString()} (
+              {discount})% OFF
+            </Text>
+          </Box>
+        ) : (
+          <Text
+            color="teal"
+            fontWeight="bold"
+            fontSize="xl"
+            flex="4"
+            textAlign="left"
+          >
+            Rs. {price.toLocaleString()}
+          </Text>
+        )}
       </HStack>
       {inCart ? (
         <Button width="100%" colorScheme="teal" onClick={goToCart}>

@@ -31,7 +31,7 @@ export type ProductActionType =
     }
   | {
       type: "REMOVE_FROM_CART";
-      payload: string;
+      payload: number;
     }
   | {
       type: "INCREASE_QUANTITY";

@@ -23,7 +23,7 @@ export const CartItem = ({
 }: ProductItemType) => {
   const { dispatch } = useProductContext();
   return (
-    <VStack alignItems="flex-start" width="20rem" height="34rem" padding="2">
+    <VStack alignItems="flex-start" width="20rem" height="40rem" padding="2">
       <Image src={image} width="100%" height="65%" />
       <HStack justifyContent="space-between" height="2">
         <Text color="teal" fontWeight="bold">
@@ -72,6 +72,21 @@ export const CartItem = ({
           +
         </Button>
       </HStack>
+      <Button width="100%" colorScheme="teal">
+        Save for later
+      </Button>
+      <Button
+        width="100%"
+        variant="ghost"
+        onClick={() =>
+          dispatch({
+            type: "REMOVE_FROM_CART",
+            payload: id,
+          })
+        }
+      >
+        Remove from cart
+      </Button>
     </VStack>
   );
 };
